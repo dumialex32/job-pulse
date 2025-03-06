@@ -1,14 +1,15 @@
 import Image from "next/image";
-import logo from "../../public/jp-logo.png";
+
 import landingImg from "../../public/landingImg.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 
 export default function Home() {
   return (
     <main>
       <header className="max-w-6xl max-auto px-4 sm:px-8 py-6">
-        <Image src={logo} alt="logo" />
+        <Logo />
       </header>
 
       <section className="max-w-6xl mx-auto px-4 sm:px-8 h-screen -mt-20 lg:grid grid-cols-[1fr_500px] items-center">
