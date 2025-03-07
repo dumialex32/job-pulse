@@ -7,15 +7,15 @@ import Logo from "@/components/Logo";
 
 export default function Home() {
   return (
-    <main>
-      <header className="max-w-6xl max-auto px-4 sm:px-8 py-6">
+    <main className="max-w-7xl mx-auto">
+      <header className=" px-4 sm:px-8 py-6">
         <Logo />
       </header>
 
-      <section className="max-w-6xl mx-auto px-4 sm:px-8 h-screen -mt-20 lg:grid grid-cols-[1fr_500px] items-center">
+      <section className="px-4 sm:px-8 h-screen -mt-20 lg:grid grid-cols-[1fr_500px] items-center gap-2">
         <div>
           <h1 className="text-4xl capitalize md:text-7xl font-bold">
-            job <span className="text-primary">tracking</span>
+            job <span className="text-primary">tracking</span> app
           </h1>
 
           <p className="leading-loose max-w-md mt-4">
