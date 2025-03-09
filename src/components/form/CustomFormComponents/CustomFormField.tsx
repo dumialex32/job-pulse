@@ -6,20 +6,16 @@ import {
   FormMessage,
   FormField,
 } from "../../ui/form";
-import { FieldValues, Path, Control } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import {} from "../../ui/select";
 import { capitalize } from "@/utils/stringUtils";
 import { Input } from "../../ui/input";
-
-type FormFieldProps<T extends FieldValues> = {
-  control: Control<T>;
-  name: Path<T>;
-};
+import { CustomFormFieldProps } from "@/types/formTypes/customFormFieldTypes";
 
 const CustomFormField = <T extends FieldValues>({
   name,
   control,
-}: FormFieldProps<T>) => {
+}: CustomFormFieldProps<T>) => {
   return (
     <FormField
       control={control}
@@ -29,9 +25,9 @@ const CustomFormField = <T extends FieldValues>({
           <FormItem>
             <FormLabel>{String(capitalize(name))}</FormLabel>
             <FormControl>
-              <Input {...field} />
+              <Input {...field} className="bg-background" />
             </FormControl>
-            <FormMessage className="text-red-300" />
+            <FormMessage />
           </FormItem>
         );
       }}

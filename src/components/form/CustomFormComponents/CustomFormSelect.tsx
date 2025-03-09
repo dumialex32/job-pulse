@@ -1,4 +1,4 @@
-import { Control, FieldValues, Path } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel } from "../../ui/form";
 import {
   Select,
@@ -7,12 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
+import {
+  CustomFormSelectProps,
+  SelectWidth,
+} from "@/types/formTypes/customFormSelectTypes";
 
-type CustomFormSelectProps<T extends FieldValues> = {
-  options: Record<string, string>[];
-  name: Path<T>;
-  customLabel?: string;
-  control: Control<T>;
+const mapSelectWidth: SelectWidth = {
+  sm: "w-[140]",
+  md: "w-[180]",
+  lg: "w-[220]",
+  full: "w-full",
 };
 
 const CustomFormSelect = <T extends FieldValues>({
@@ -20,6 +24,7 @@ const CustomFormSelect = <T extends FieldValues>({
   control,
   name,
   customLabel,
+  width,
 }: CustomFormSelectProps<T>) => {
   return (
     <FormField
@@ -31,7 +36,9 @@ const CustomFormSelect = <T extends FieldValues>({
             <FormLabel className="capitalize">{customLabel || name}</FormLabel>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger
+                  className={`${mapSelectWidth[width || "full"]} bg-background`}
+                >
                   <SelectValue placeholder={`Select ${name}`} />
                 </SelectTrigger>
               </FormControl>
