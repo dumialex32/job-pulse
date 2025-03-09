@@ -6,7 +6,7 @@ import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import {
   CreateJobFormValues,
-  formSchema,
+  createJobFormSchema,
   JobMode,
   JobStatus,
 } from "@/types/formTypes/createJobFormTypes";
@@ -24,7 +24,7 @@ const defaultValues: CreateJobFormValues = {
 
 const CreateJobForm = () => {
   const form = useForm<CreateJobFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createJobFormSchema),
     defaultValues,
   });
 

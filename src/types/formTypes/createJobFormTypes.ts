@@ -14,7 +14,7 @@ export type JobType = {
 };
 
 // createJobForm types
-export type CreateJobFormValues = z.infer<typeof formSchema>;
+export type CreateJobFormValues = z.infer<typeof createJobFormSchema>;
 
 export enum JobStatus {
   Pending = "pending",
@@ -46,7 +46,7 @@ const stringValidation = (fieldName: string) =>
       message: setInputLengthValidationMessage(fieldName),
     });
 
-export const formSchema = z.object({
+export const createJobFormSchema = z.object({
   position: stringValidation("Position"),
   company: stringValidation("Company"),
   location: stringValidation("Location"),
