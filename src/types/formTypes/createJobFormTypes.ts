@@ -1,3 +1,6 @@
+import { z } from "zod";
+
+// JobType
 export type JobType = {
   id: string;
   createdAt: Date;
@@ -10,9 +13,8 @@ export type JobType = {
   mode: string;
 };
 
-//////////////////
-
-import { z } from "zod";
+// createJobForm types
+export type CreateJobFormValues = z.infer<typeof formSchema>;
 
 export enum JobStatus {
   Pending = "pending",
@@ -26,7 +28,7 @@ export enum JobMode {
   Internship = "internship",
 }
 
-// form zod schema validation
+// createJobForm schema
 const POSITION_MIN_LENGTH = 2;
 const POSITION_MAX_LENGTH = 18;
 

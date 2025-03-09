@@ -1,19 +1,20 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import {
+  CreateJobFormValues,
   formSchema,
   JobMode,
   JobStatus,
 } from "@/types/formTypes/createJobFormTypes";
 import CustomFormSelect from "./CustomFormComponents/CustomFormSelect";
 import CustomFormField from "./CustomFormComponents/CustomFormField";
+import { getSelectOptions } from "@/utils/formUtils";
 
-const defaultValues: z.infer<typeof formSchema> = {
+const defaultValues: CreateJobFormValues = {
   position: "",
   company: "",
   location: "",
@@ -22,44 +23,50 @@ const defaultValues: z.infer<typeof formSchema> = {
 };
 
 const CreateJobForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<CreateJobFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: CreateJobFormValues) => {
     console.log(values);
   };
 
-  const getSelectOptions = <T extends Record<string, string>>(x: T) => {
-    return Object.entries(x).map(([key, value]) => ({
-      label: key,
-      value,
-    }));
-  };
-
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <CustomFormField control={form.control} name="position" />
-        <CustomFormField control={form.control} name="company" />
-        <CustomFormField control={form.control} name="location" />
+    <div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="p-8 bg-muted rounded"
+        >
+          <h2 className="text-4xl font-semibold mb-8 col-span-3">Add Job</h2>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-start">
+            {/* position form input */}
+            <CustomFormField control={form.control} name="position" />
+            {/* ccompany form input */}
+            <CustomFormField control={form.control} name="company" />
+            {/* location form input */}
+            <CustomFormField control={form.control} name="location" />
+            {/* status form select */}
+            <CustomFormSelect
+              control={form.control}
+              options={getSelectOptions(JobStatus)}
+              name="status"
+            />
+            {/* mode form select */}
+            <CustomFormSelect
+              control={form.control}
+              options={getSelectOptions(JobMode)}
+              name="mode"
+            />
 
-        <CustomFormSelect
-          control={form.control}
-          options={getSelectOptions(JobStatus)}
-          name="status"
-        />
-
-        <CustomFormSelect
-          control={form.control}
-          options={getSelectOptions(JobMode)}
-          name="mode"
-        />
-
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+            <Button className="self-end capitalize" type="submit">
+              Create Job
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };
 
