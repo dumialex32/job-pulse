@@ -35,9 +35,14 @@ const setInputLengthValidationMessage = (fieldName: string) => {
 };
 
 const stringValidation = (fieldName: string) =>
-  z.string().min(POSITION_MAX_LENGTH, {
-    message: setInputLengthValidationMessage(fieldName),
-  });
+  z
+    .string()
+    .min(POSITION_MIN_LENGTH, {
+      message: setInputLengthValidationMessage(fieldName),
+    })
+    .max(POSITION_MAX_LENGTH, {
+      message: setInputLengthValidationMessage(fieldName),
+    });
 
 export const formSchema = z.object({
   position: stringValidation("Position"),
