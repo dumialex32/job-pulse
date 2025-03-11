@@ -10,6 +10,8 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 const authAndRedirect = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 3000)); // for dev only
+
   const { userId } = await auth();
 
   if (!userId) {

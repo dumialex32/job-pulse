@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import {
-  CreateJobFormValues,
+  CreateJobFormValues as CreateJobType,
   createJobFormSchema,
   JobMode,
   JobStatus,
@@ -13,8 +13,13 @@ import {
 import CustomFormSelect from "./CustomFormComponents/CustomFormSelect";
 import CustomFormField from "./CustomFormComponents/CustomFormField";
 import { getSelectOptions } from "@/utils/formUtils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createJobAction } from "@/utils/actions";
+import { toast } from "sonner";
+import dayjs from "dayjs";
+import { useRouter } from "next/navigation";
 
-const defaultValues: CreateJobFormValues = {
+const defaultValues: CreateJobType = {
   position: "",
   company: "",
   location: "",
@@ -23,13 +28,46 @@ const defaultValues: CreateJobFormValues = {
 };
 
 const CreateJobForm = () => {
-  const form = useForm<CreateJobFormValues>({
+  const form = useForm<CreateJobType>({
     resolver: zodResolver(createJobFormSchema),
     defaultValues,
   });
 
-  const onSubmit = (values: CreateJobFormValues) => {
-    console.log(values);
+  const queryClient = useQueryClient();
+
+  const router = useRouter();
+
+  const { mutate, isPending, error, isSuccess } = useMutation({
+    mutationFn: (newJob: CreateJobType) => {
+      return createJobAction(newJob);
+    },
+    onSuccess: (data) => {
+      if (!data) {
+        toast("There was an error");
+        return;
+      }
+
+      toast("Job has been created", {
+        description: dayjs().format("dddd, MMMM, D, YYYY"),
+      });
+
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
+      queryClient.invalidateQueries({ queryKey: ["charts"] });
+
+      // form.reset()
+
+      router.push("/jobs");
+    },
+    onError: () => {
+      return toast("There was an error while creating job");
+    },
+  });
+
+  const onSubmit = (values: CreateJobType) => {
+    const newJob = { ...values };
+
+    mutate(newJob);
   };
 
   return (
@@ -60,8 +98,12 @@ const CreateJobForm = () => {
               name="mode"
             />
 
-            <Button className="self-end capitalize" type="submit">
-              Create Job
+            <Button
+              className="self-end capitalize"
+              type="submit"
+              disabled={isPending}
+            >
+              {isPending ? "Loading" : "Create Job"}
             </Button>
           </div>
         </form>
