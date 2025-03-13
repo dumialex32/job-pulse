@@ -26,28 +26,6 @@ const authAndRedirect = async () => {
   return userId;
 };
 
-export const createJobAction = async (
-  values: CreateJobFormValues
-): Promise<JobType | null> => {
-  try {
-    createJobFormSchema.parse(values);
-
-    const userId = await authAndRedirect();
-
-    const job: JobType = await prisma.job.create({
-      data: {
-        ...values,
-        clerkId: userId,
-      },
-    });
-
-    return job;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
-
 export const getJobsAction = async ({
   page = 1,
   limit = 10,
@@ -98,5 +76,27 @@ export const getJobsAction = async ({
   } catch (err) {
     console.error(err);
     return { jobs: [], totalPages: 0, count: 0 };
+  }
+};
+
+export const createJobAction = async (
+  values: CreateJobFormValues
+): Promise<JobType | null> => {
+  try {
+    createJobFormSchema.parse(values);
+
+    const userId = await authAndRedirect();
+
+    const job: JobType = await prisma.job.create({
+      data: {
+        ...values,
+        clerkId: userId,
+      },
+    });
+
+    return job;
+  } catch (err) {
+    console.error(err);
+    return null;
   }
 };
