@@ -48,12 +48,12 @@ export const createJobAction = async (
   }
 };
 
-const getJobsAction: Promise<GetJobsActionResponse> = async ({
+export const getJobsAction = async ({
   page = 1,
   limit = 10,
   search,
   jobStatus,
-}: GetJobsActionProps) => {
+}: GetJobsActionProps): Promise<GetJobsActionResponse> => {
   try {
     const userId = await authAndRedirect();
 

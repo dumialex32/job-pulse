@@ -11,5 +11,4 @@ export type GetJobsActionResponse = {
   jobs: JobType[];
   count: number;
   totalPages: number;
-  page: number;
 };
