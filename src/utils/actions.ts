@@ -15,8 +15,6 @@ import {
 import { Prisma } from "@prisma/client";
 
 const authAndRedirect = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 3000)); // for dev only
-
   const { userId } = await auth();
 
   if (!userId) {
@@ -97,6 +95,23 @@ export const createJobAction = async (
     return job;
   } catch (err) {
     console.error(err);
+    return null;
+  }
+};
+
+export const deleteJobAction = async (
+  jobId: string
+): Promise<JobType | null> => {
+  try {
+    const userId = await authAndRedirect();
+
+    const job = await prisma.job.delete({
+      where: { id: jobId, clerkId: userId },
+    });
+
+    return job;
+  } catch (err) {
+    console.log(err);
     return null;
   }
 };

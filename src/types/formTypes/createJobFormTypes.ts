@@ -30,7 +30,7 @@ export enum JobMode {
 
 // createJobForm schema
 const POSITION_MIN_LENGTH = 2;
-const POSITION_MAX_LENGTH = 18;
+const POSITION_MAX_LENGTH = 32;
 
 const setInputLengthValidationMessage = (fieldName: string) => {
   return `${fieldName} must be between ${POSITION_MIN_LENGTH} and ${POSITION_MAX_LENGTH} characters long. `;

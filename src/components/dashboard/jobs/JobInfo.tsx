@@ -10,13 +10,13 @@ import {
 } from "lucide-react";
 
 type MapStatus = {
-  [key in JobStatus as string]: { icon: React.ReactElement; style: "string" };
+  [key in JobStatus as string]: { icon: React.ReactElement; style: string };
 };
 
 const mapStatus: MapStatus = {
-  pending: { icon: <Loader />, style: "bg-blue-300" },
-  interview: { icon: <Radio />, style: "bg-green-300" },
-  declined: { icon: <CircleX />, style: "bg-red-300" },
+  pending: { icon: <Loader />, style: "bg-blue-400" },
+  interview: { icon: <Radio />, style: "bg-green-400" },
+  declined: { icon: <CircleX />, style: "bg-red-400" },
 };
 
 const JobInfo = ({ job }: { job: JobType }) => {
