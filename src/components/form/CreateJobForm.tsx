@@ -18,6 +18,7 @@ import { createJobAction } from "@/utils/actions";
 import { toast } from "sonner";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
+import ButtonLoader from "../ButtonLoader";
 
 const defaultValues: CreateJobType = {
   position: "",
@@ -103,7 +104,7 @@ const CreateJobForm = () => {
               type="submit"
               disabled={isPending}
             >
-              {isPending ? "Loading" : "Create Job"}
+              {isPending ? <ButtonLoader color="white" /> : "Create Job"}
             </Button>
           </div>
         </form>

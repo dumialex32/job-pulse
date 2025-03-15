@@ -28,6 +28,22 @@ const loaderVariants = cva("animate-spin text-primary", {
   },
 });
 
+export type MapSpinnerColor = {
+  default: "text-zinc-800";
+  primary: "text-primary";
+  white: "text-white";
+  blue: "text-blue-800";
+  red: "text-red-800";
+};
+
+export const mapSpinnerColor = {
+  default: "text-zinc-800",
+  primary: "text-primary",
+  white: "text-white",
+  blue: "text-blue-800",
+  red: "text-red-800",
+};
+
 interface SpinnerContentProps
   extends VariantProps<typeof spinnerVariants>,
     VariantProps<typeof loaderVariants> {
