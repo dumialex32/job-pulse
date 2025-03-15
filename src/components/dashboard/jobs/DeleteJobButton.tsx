@@ -1,4 +1,6 @@
+import Confirm from "@/components/Confirm";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { deleteJobAction } from "@/utils/actions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -21,18 +23,25 @@ const DeleteJobButton = ({ id }: { id: string }) => {
     },
   });
 
+  const handleDeleteJob = () => {
+    mutate(id);
+  };
+
   return (
-    <Button
-      variant="destructive"
-      onClick={() => {
-        if (window.confirm("Are you sure you want to delete this job?")) {
-          mutate(id);
-        }
-      }}
-      disabled={isPending}
-    >
-      {isPending ? "Deleting..." : "Delete"}
-    </Button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Delete</Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <Confirm
+          action="delete"
+          resource="job"
+          onHandleConfirm={handleDeleteJob}
+          isLoading={isPending}
+        />
+      </DialogContent>
+    </Dialog>
   );
 };
 
