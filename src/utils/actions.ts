@@ -77,6 +77,25 @@ export const getJobsAction = async ({
   }
 };
 
+export const getJobAction = async (id: string): Promise<JobType | null> => {
+  try {
+    const userId = await authAndRedirect();
+
+    const job = await prisma.job.findUnique({
+      where: {
+        clerkId: userId,
+        id,
+      },
+    });
+
+    console.log(job);
+    return job;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
 export const createJobAction = async (
   values: CreateJobFormValues
 ): Promise<JobType | null> => {
@@ -107,6 +126,32 @@ export const deleteJobAction = async (
 
     const job = await prisma.job.delete({
       where: { id: jobId, clerkId: userId },
+    });
+
+    return job;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+const editJobAction = async (
+  values: CreateJobFormValues,
+  id: string
+): Promise<JobType | null> => {
+  try {
+    createJobFormSchema.parse(values);
+
+    const userId = await authAndRedirect();
+
+    const job = await prisma.job.update({
+      where: {
+        clerkId: userId,
+        id,
+      },
+      data: {
+        ...values,
+      },
     });
 
     return job;
