@@ -2,9 +2,9 @@
 
 import {
   createJobFormSchema,
-  CreateJobFormValues,
+  CreateOrEditJobFormValues,
   JobType,
-} from "@/types/formTypes/createJobFormTypes";
+} from "@/types/formTypes/createOrEditJobFormTypes";
 import prisma from "./db";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
@@ -97,7 +97,7 @@ export const getJobAction = async (id: string): Promise<JobType | null> => {
 };
 
 export const createJobAction = async (
-  values: CreateJobFormValues
+  values: CreateOrEditJobFormValues
 ): Promise<JobType | null> => {
   try {
     createJobFormSchema.parse(values);
@@ -118,25 +118,8 @@ export const createJobAction = async (
   }
 };
 
-export const deleteJobAction = async (
-  jobId: string
-): Promise<JobType | null> => {
-  try {
-    const userId = await authAndRedirect();
-
-    const job = await prisma.job.delete({
-      where: { id: jobId, clerkId: userId },
-    });
-
-    return job;
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
-};
-
-const editJobAction = async (
-  values: CreateJobFormValues,
+export const editJobAction = async (
+  values: CreateOrEditJobFormValues,
   id: string
 ): Promise<JobType | null> => {
   try {
@@ -152,6 +135,23 @@ const editJobAction = async (
       data: {
         ...values,
       },
+    });
+
+    return job;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const deleteJobAction = async (
+  jobId: string
+): Promise<JobType | null> => {
+  try {
+    const userId = await authAndRedirect();
+
+    const job = await prisma.job.delete({
+      where: { id: jobId, clerkId: userId },
     });
 
     return job;

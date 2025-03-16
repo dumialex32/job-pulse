@@ -1,4 +1,4 @@
-import { JobType } from "../formTypes/createJobFormTypes";
+import { JobType } from "../formTypes/createOrEditJobFormTypes";
 
 export type GetJobsActionProps = {
   search?: string;

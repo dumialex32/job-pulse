@@ -6,11 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { JobType } from "@/types/formTypes/createJobFormTypes";
+import { JobType } from "@/types/formTypes/createOrEditJobFormTypes";
 import JobInfo from "./JobInfo";
 import DeleteJobButton from "./DeleteJobButton";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import EditJobButton from "./EditJobButton";
 
 const JobCard = ({ job }: { job: JobType }) => {
   return (
@@ -23,9 +22,7 @@ const JobCard = ({ job }: { job: JobType }) => {
         <JobInfo job={job} />
       </CardContent>
       <CardFooter className="flex items center gap-3">
-        <Button asChild>
-          <Link href={`/jobs/${job.id}`}>Edit</Link>
-        </Button>
+        <EditJobButton job={job} />
 
         <DeleteJobButton id={job.id} />
       </CardFooter>

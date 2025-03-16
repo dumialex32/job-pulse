@@ -1,4 +1,4 @@
-import { JobStatus, JobType } from "@/types/formTypes/createJobFormTypes";
+import { JobStatus, JobType } from "@/types/formTypes/createOrEditJobFormTypes";
 import dayjs from "dayjs";
 import {
   BriefcaseBusiness,

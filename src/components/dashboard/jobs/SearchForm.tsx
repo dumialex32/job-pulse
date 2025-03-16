@@ -11,7 +11,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { getSelectOptions } from "@/utils/formUtils";
-import { JobStatus } from "@/types/formTypes/createJobFormTypes";
+import { JobStatus } from "@/types/formTypes/createOrEditJobFormTypes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const SearchForm = () => {

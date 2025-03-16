@@ -14,7 +14,9 @@ export type JobType = {
 };
 
 // createJobForm types
-export type CreateJobFormValues = z.infer<typeof createJobFormSchema>;
+export type CreateOrEditJobFormValues = z.infer<typeof createJobFormSchema> & {
+  id?: string;
+};
 
 export enum JobStatus {
   Pending = "pending",

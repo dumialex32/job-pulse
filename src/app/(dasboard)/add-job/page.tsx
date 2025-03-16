@@ -1,4 +1,5 @@
-import CreateJobForm from "@/components/form/CreateJobForm";
+import CreateOrEditJobForm from "@/components/form/CreateOrEditJobForm";
+import { Dialog } from "@/components/ui/dialog";
 import {
   dehydrate,
   HydrationBoundary,
@@ -11,7 +12,9 @@ const AddJobPage = () => {
   return (
     <div>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <CreateJobForm />
+        <Dialog>
+          <CreateOrEditJobForm />
+        </Dialog>
       </HydrationBoundary>
     </div>
   );

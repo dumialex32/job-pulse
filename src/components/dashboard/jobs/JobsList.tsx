@@ -20,7 +20,7 @@ const JobsList = () => {
   });
 
   if (isLoading) return <Spinner />;
-  if (!data || data.jobs.length === 0)
+  if (!data || !data.jobs || data.jobs.length === 0)
     return (
       <Alert message="No jobs added yet. Start by adding your first job!" />
     );

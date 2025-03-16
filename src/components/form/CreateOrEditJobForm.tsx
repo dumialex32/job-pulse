@@ -5,42 +5,60 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "../ui/form";
 import { Button } from "../ui/button";
 import {
-  CreateJobFormValues as CreateJobType,
+  CreateOrEditJobFormValues,
   createJobFormSchema,
   JobMode,
   JobStatus,
-} from "@/types/formTypes/createJobFormTypes";
+} from "@/types/formTypes/createOrEditJobFormTypes";
 import CustomFormSelect from "./CustomFormComponents/CustomFormSelect";
 import CustomFormField from "./CustomFormComponents/CustomFormField";
 import { getSelectOptions } from "@/utils/formUtils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createJobAction } from "@/utils/actions";
+import { createJobAction, editJobAction } from "@/utils/actions";
 import { toast } from "sonner";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import ButtonLoader from "../ButtonLoader";
+import { DialogClose, DialogTitle } from "../ui/dialog";
+import { useRef } from "react";
 
-const defaultValues: CreateJobType = {
-  position: "",
-  company: "",
-  location: "",
-  status: JobStatus.Pending,
-  mode: JobMode.FullTime,
-};
+const createOrEditJobDefaultValues = (
+  editJobValues?: CreateOrEditJobFormValues
+) => ({
+  position: editJobValues?.position || "",
+  company: editJobValues?.company || "",
+  location: editJobValues?.location || "",
+  status: editJobValues?.status || JobStatus.Pending,
+  mode: editJobValues?.mode || JobMode.FullTime,
+});
 
-const CreateJobForm = () => {
-  const form = useForm<CreateJobType>({
+const CreateOrEditJobForm = ({
+  edit = false,
+  editJobValues,
+}: {
+  edit?: boolean;
+  editJobValues?: CreateOrEditJobFormValues;
+}) => {
+  const form = useForm<CreateOrEditJobFormValues>({
     resolver: zodResolver(createJobFormSchema),
-    defaultValues,
+    defaultValues: createOrEditJobDefaultValues(editJobValues),
   });
+
+  const dialogCloseRef = useRef<HTMLButtonElement>(null);
 
   const queryClient = useQueryClient();
 
   const router = useRouter();
 
-  const { mutate, isPending, error, isSuccess } = useMutation({
-    mutationFn: (newJob: CreateJobType) => {
-      return createJobAction(newJob);
+  const { mutate: createOrEditJob, isPending } = useMutation({
+    mutationFn: ({
+      jobValues,
+      id,
+    }: {
+      jobValues: CreateOrEditJobFormValues;
+      id: string;
+    }) => {
+      return edit ? editJobAction(jobValues, id) : createJobAction(jobValues);
     },
     onSuccess: (data) => {
       if (!data) {
@@ -48,7 +66,7 @@ const CreateJobForm = () => {
         return;
       }
 
-      toast("Job has been created", {
+      toast(`Job successfully ${edit ? "updated" : "created"}.`, {
         description: dayjs().format("dddd, MMMM, D, YYYY"),
       });
 
@@ -56,19 +74,24 @@ const CreateJobForm = () => {
       queryClient.invalidateQueries({ queryKey: ["stats"] });
       queryClient.invalidateQueries({ queryKey: ["charts"] });
 
-      // form.reset()
+      /* form.reset() // alternative instead of router.push */
 
-      router.push("/jobs");
+      if (edit && dialogCloseRef.current) {
+        dialogCloseRef.current.click(); // access close dialog function
+      } else {
+        router.push("/jobs");
+      }
     },
     onError: () => {
       return toast("There was an error while creating job");
     },
   });
 
-  const onSubmit = (values: CreateJobType) => {
-    const newJob = { ...values };
+  const onSubmit = (values: CreateOrEditJobFormValues) => {
+    const jobValues = { ...values };
+    const id = editJobValues?.id || "";
 
-    mutate(newJob);
+    createOrEditJob({ jobValues, id });
   };
 
   return (
@@ -78,8 +101,16 @@ const CreateJobForm = () => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="p-8 bg-muted rounded"
         >
-          <h2 className="text-4xl font-semibold mb-8 col-span-3">Add Job</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-start">
+          <DialogTitle asChild>
+            <h2 className="text-4xl font-semibold mb-8 col-span-3 capitalize">
+              {edit ? "edit job" : "create job"}
+            </h2>
+          </DialogTitle>
+          <div
+            className={`grid ${
+              edit ? "grid-cols-1" : "md:grid-cols-2 lg:grid-cols-3"
+            } gap-4 items-start`}
+          >
             {/* position form input */}
             <CustomFormField control={form.control} name="position" />
             {/* ccompany form input */}
@@ -104,8 +135,18 @@ const CreateJobForm = () => {
               type="submit"
               disabled={isPending}
             >
-              {isPending ? <ButtonLoader color="white" /> : "Create Job"}
+              {isPending ? (
+                <ButtonLoader color="white" />
+              ) : (
+                (edit && "Edit") || "CreateJob"
+              )}
             </Button>
+
+            {edit && (
+              <DialogClose asChild ref={dialogCloseRef}>
+                <Button>Cancel</Button>
+              </DialogClose>
+            )}
           </div>
         </form>
       </Form>
@@ -113,4 +154,4 @@ const CreateJobForm = () => {
   );
 };
 
-export default CreateJobForm;
+export default CreateOrEditJobForm;
