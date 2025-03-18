@@ -16,7 +16,7 @@ import { Prisma } from "@prisma/client";
 
 const authAndRedirect = async () => {
   const { userId } = await auth();
-
+  console.log(userId);
   if (!userId) {
     redirect("/");
   }

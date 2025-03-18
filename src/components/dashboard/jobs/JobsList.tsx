@@ -19,6 +19,8 @@ const JobsList = () => {
     queryFn: () => getJobsAction({ search, jobStatus, page }),
   });
 
+  console.log(data);
+
   if (isLoading) return <Spinner />;
   if (!data || !data.jobs || data.jobs.length === 0)
     return (
