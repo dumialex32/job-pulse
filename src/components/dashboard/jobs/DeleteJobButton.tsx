@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { deleteJobAction } from "@/utils/actions";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
 import { toast } from "sonner";
 
 const DeleteJobButton = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
+  const dialogRef = useRef<HTMLButtonElement | null>(null);
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteJobAction,
@@ -15,6 +17,8 @@ const DeleteJobButton = ({ id }: { id: string }) => {
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       queryClient.invalidateQueries({ queryKey: ["stats"] });
       queryClient.invalidateQueries({ queryKey: ["charts"] });
+
+      dialogRef.current?.click(); // programatically close the dialog
     },
     onError: (error) => {
       toast.error(
@@ -29,7 +33,7 @@ const DeleteJobButton = ({ id }: { id: string }) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild ref={dialogRef}>
         <Button>Delete</Button>
       </DialogTrigger>
 
