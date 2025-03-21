@@ -17,7 +17,7 @@ import dayjs from "dayjs";
 
 const authAndRedirect = async () => {
   const { userId } = await auth();
-  console.log(userId);
+
   if (!userId) {
     redirect("/");
   }
@@ -89,7 +89,6 @@ export const getJobAction = async (id: string): Promise<JobType | null> => {
       },
     });
 
-    console.log(job);
     return job;
   } catch (err) {
     console.error(err);
@@ -157,7 +156,7 @@ export const deleteJobAction = async (
 
     return job;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return null;
   }
 };
@@ -196,7 +195,7 @@ export const getStatsAction = async (): Promise<{
 
     return defaultStats;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     redirect("/jobs");
   }
 };
@@ -219,7 +218,6 @@ export async function getChartsDataAction(): Promise<
       },
     });
 
-    console.log(jobs);
     const applicationsPerMonth = jobs.reduce((acc, job) => {
       const date = dayjs(job.createdAt).format("MMM YY");
 
