@@ -19,7 +19,7 @@ const JobsPage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-12">
         <SearchForm />
 
         <JobsList />

@@ -28,8 +28,8 @@ const authAndRedirect = async () => {
 export const getJobsAction = async ({
   page = 1,
   limit = 10,
-  search,
-  jobStatus,
+  search = "",
+  jobStatus = "",
 }: GetJobsActionProps): Promise<GetJobsActionResponse> => {
   try {
     const userId = await authAndRedirect();
@@ -57,24 +57,26 @@ export const getJobsAction = async ({
       whereClause = { ...whereClause, status: jobStatus };
     }
 
-    const [getJobs, getResultsCount] = await Promise.all([
+    const skip = (page - 1) * limit;
+
+    const [getJobs, count] = await Promise.all([
       prisma.job.findMany({
         where: whereClause,
         orderBy: { createdAt: "desc" },
         take: limit,
-        skip: (page - 1) * limit,
+        skip: skip,
       }),
       prisma.job.count({
         where: whereClause,
       }),
     ]);
 
-    const totalPages = Math.ceil(getResultsCount / limit);
+    const totalPages = Math.ceil(count / limit);
 
-    return { jobs: getJobs, totalPages, count: getResultsCount };
+    return { jobs: getJobs, count, page, totalPages };
   } catch (err) {
     console.error(err);
-    return { jobs: [], totalPages: 0, count: 0 };
+    return { jobs: [], page: 1, totalPages: 0, count: 0 };
   }
 };
 
