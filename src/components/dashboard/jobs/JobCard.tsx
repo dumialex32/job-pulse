@@ -15,7 +15,9 @@ const JobCard = ({ job }: { job: JobType }) => {
   return (
     <Card className="bg-muted">
       <CardHeader>
-        <CardTitle className="capitalize text-2xl">{job.position}</CardTitle>
+        <CardTitle className="capitalize text-2xl text-nowrap whitespace-nowrap text-ellipsis overflow-hidden">
+          {job.position}
+        </CardTitle>
         <CardDescription>{job.company}</CardDescription>
       </CardHeader>
       <CardContent>
