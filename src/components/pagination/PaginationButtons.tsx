@@ -2,10 +2,7 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import { useCallback } from "react";
-import {
-  AddPageButtonProps,
-  PaginationButtonsProps,
-} from "@/types/paginationTypes/paginationTypes";
+import { PaginationButtonsProps } from "@/types/paginationTypes/paginationTypes";
 
 const PaginationButtons = ({
   totalPages,
@@ -14,8 +11,6 @@ const PaginationButtons = ({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-
-  console.log(totalPages);
 
   const handlePageChange = useCallback(
     (pageNum: number) => {
@@ -41,6 +36,7 @@ const PaginationButtons = ({
   const addPageButton = (page: number, activeClass: boolean) => {
     return (
       <Button
+        key={page}
         variant={activeClass ? "default" : "secondary"}
         onClick={() => handlePageChange(page)}
       >
@@ -48,8 +44,6 @@ const PaginationButtons = ({
       </Button>
     );
   };
-
-  console.log(totalPages);
 
   const renderPageButtons = () => {
     const pageButtons = [];

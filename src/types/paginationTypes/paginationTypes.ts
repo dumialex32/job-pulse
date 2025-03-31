@@ -2,6 +2,8 @@ export type PaginationProps = {
   currentPage: number;
   totalPages: number;
   count: number;
+  itemsPerPage: number;
+  onSetItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type PaginationButtonsProps = {
@@ -9,7 +11,12 @@ export type PaginationButtonsProps = {
   currentPage: number;
 };
 
-export type ResultsProps = PaginationProps & {};
+export type ResultsProps = {
+  resource: string;
+  itemsPerPage: number;
+  currentPage: number;
+  count: number;
+};
 
 export type AddPageButtonProps = {
   page: number;

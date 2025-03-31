@@ -31,6 +31,7 @@ export const getJobsAction = async ({
   search = "",
   jobStatus = "",
 }: GetJobsActionProps): Promise<GetJobsActionResponse> => {
+  console.log(limit);
   try {
     const userId = await authAndRedirect();
 

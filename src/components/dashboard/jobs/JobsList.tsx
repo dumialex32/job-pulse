@@ -11,7 +11,8 @@ import JobLoadingCardList from "./JobLoadingCardList";
 import Results from "@/components/pagination/Results";
 
 const JobsList = () => {
-  const [limit, setLimit] = useState<number>(10);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+  console.log(itemsPerPage);
 
   const searchParams = useSearchParams();
 
@@ -20,11 +21,12 @@ const JobsList = () => {
   const page = Number(searchParams.get("page")) || 1;
 
   const { data, isLoading } = useQuery({
-    queryKey: ["jobs", search, jobStatus, page],
-    queryFn: () => getJobsAction({ search, jobStatus, page }),
+    queryKey: ["jobs", search, jobStatus, page, itemsPerPage],
+    queryFn: () =>
+      getJobsAction({ search, jobStatus, page, limit: Number(itemsPerPage) }),
   });
 
-  if (isLoading) return <JobLoadingCardList limit={limit} />;
+  if (isLoading) return <JobLoadingCardList itemsPerPage={itemsPerPage} />;
 
   if (!data || data.jobs.length === 0) {
     return (
@@ -38,15 +40,18 @@ const JobsList = () => {
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-x-2">
         <Results
-          totalPages={totalPages}
           currentPage={currentPage}
           count={count}
+          resource="job"
+          itemsPerPage={itemsPerPage}
         />
 
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
           count={count}
+          onSetItemsPerPage={setItemsPerPage}
+          itemsPerPage={itemsPerPage}
         />
       </div>
 

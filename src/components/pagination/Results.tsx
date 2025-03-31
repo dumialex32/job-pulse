@@ -1,16 +1,26 @@
 import { ResultsProps } from "@/types/paginationTypes/paginationTypes";
+import pluralize from "pluralize";
 
-const Results = ({ count, totalPages, currentPage }: ResultsProps) => {
-  const results = totalPages * currentPage;
+const Results = ({
+  count,
+  currentPage,
+  itemsPerPage,
+  resource,
+}: ResultsProps) => {
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, count);
 
-  const pageResults = results < count ? results : count;
-
-  console.log("results:", results);
-  console.log("count", count);
+  const resourceDisplay = pluralize(resource, count);
 
   return (
-    <div className="px-4 py-2 bg-muted rounded">
-      <span>{pageResults}</span> of <span>{count}</span>
+    <div className="px-4 py-2">
+      <span>
+        Showing{" "}
+        <span className="font-bold">
+          {startItem}-{endItem}
+        </span>{" "}
+        from <span className="font-semibold">{count}</span> {resourceDisplay}
+      </span>
     </div>
   );
 };
