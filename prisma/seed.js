@@ -5,7 +5,7 @@ import data from "./mock_data.json" assert { type: "json" };
 const prisma = new PrismaClient();
 
 const main = async () => {
-  const clerkId = "user_2twgfPUzflOfamTGpsRey9rBUYS";
+  const clerkId = "your_clerk_id"; // hardcode your clerk id for seeding
   const jobs = data.map((job) => {
     return {
       ...job,
