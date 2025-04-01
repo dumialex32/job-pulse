@@ -4,16 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getSelectOptions } from "@/utils/formUtils";
 import { JobStatus } from "@/types/formTypes/createOrEditJobFormTypes";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import CustomSelect from "@/components/CustomSelect";
+import useQueryParams from "@/hooks/useQueryParams";
 
 const SearchForm = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-
-  const search = searchParams.get("search") || "";
-  const status = searchParams.get("status") || "all";
+  const { search, jobStatus } = useQueryParams();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,7 +42,7 @@ const SearchForm = () => {
       <CustomSelect
         name="jobStatus"
         options={getSelectOptions({ All: "all", ...JobStatus })}
-        defaultValue={status}
+        defaultValue={jobStatus}
       />
 
       <Button type="submit">Search</Button>

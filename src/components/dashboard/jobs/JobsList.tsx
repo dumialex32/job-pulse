@@ -32,13 +32,15 @@ const JobsList = () => {
           itemsPerPage={itemsPerPage}
         />
 
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          count={count}
-          onSetItemsPerPage={setItemsPerPage}
-          itemsPerPage={itemsPerPage}
-        />
+        {count > jobs.length && (
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            count={count}
+            itemsPerPage={itemsPerPage}
+            onSetItemsPerPage={setItemsPerPage}
+          />
+        )}
       </div>
 
       <JobCardsContainer jobs={jobs} />
