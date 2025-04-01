@@ -1,9 +1,11 @@
+import React from "react";
+
 export type PaginationProps = {
   currentPage: number;
   totalPages: number;
   count: number;
   itemsPerPage: number;
-  onSetItemsPerPage: React.Dispatch<React.SetStateAction<number>>;
+  onSetItemsPerPage?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type PaginationButtonsProps = {
@@ -21,4 +23,9 @@ export type ResultsProps = {
 export type AddPageButtonProps = {
   page: number;
   activeClass: boolean;
+};
+
+export type usePaginationProps = {
+  currentPage: number;
+  totalPages: number;
 };

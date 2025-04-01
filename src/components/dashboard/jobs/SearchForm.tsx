@@ -2,17 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-} from "@/components/ui/select";
 import { getSelectOptions } from "@/utils/formUtils";
 import { JobStatus } from "@/types/formTypes/createOrEditJobFormTypes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import CustomSelect from "@/components/CustomSelect";
 
 const SearchForm = () => {
   const searchParams = useSearchParams();
@@ -48,23 +41,11 @@ const SearchForm = () => {
         defaultValue={search}
       />
 
-      <Select name="jobStatus" defaultValue={status}>
-        <SelectTrigger className="w-full bg-background">
-          <SelectValue />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectGroup>
-            {getSelectOptions({ All: "all", ...JobStatus }).map((status) => {
-              return (
-                <SelectItem key={status.value} value={status.value}>
-                  {status.label}
-                </SelectItem>
-              );
-            })}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <CustomSelect
+        name="jobStatus"
+        options={getSelectOptions({ All: "all", ...JobStatus })}
+        defaultValue={status}
+      />
 
       <Button type="submit">Search</Button>
     </form>
