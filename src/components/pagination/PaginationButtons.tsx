@@ -1,6 +1,6 @@
 import { Button } from "../ui/button";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import { PaginationButtonsProps } from "@/types/paginationTypes/paginationTypes";
+import { PaginationButtonsProps } from "@/types/paginationTypes";
 import usePagination from "@/hooks/usePagination";
 
 const PaginationButtons = ({

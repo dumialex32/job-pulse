@@ -7,9 +7,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { ChartData } from "@/types/stats/chartsContainerTypes";
-import { getChartsDataAction } from "@/utils/actions";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import useChartsQuery from "@/hooks/useChartsQuery";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 const chartConfig = {
@@ -21,36 +19,20 @@ const chartConfig = {
 };
 
 const ChartsContainer = () => {
-  const queryClient = useQueryClient();
-
-  // retrieve prefetched data
-  const initialData = queryClient.getQueryData<ChartData>(["charts"]);
-  const initialDataUpdatedAt = queryClient.getQueryState([
-    "charts",
-  ])?.dataUpdatedAt;
-
-  const {
-    data = initialData,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["charts"],
-    queryFn: () => getChartsDataAction(),
-    initialData,
-    initialDataUpdatedAt,
-    staleTime: 1000 * 60 * 60,
-    retry: 1,
-  });
+  const { data, isLoading, isError, error } = useChartsQuery();
 
   if (isLoading) {
     return <Spinner />;
   }
-
   if (isError) {
-    return <Alert message={`Error loading chart data: ${error.message}`} />;
+    return (
+      <Alert
+        message={`${
+          error?.message || "Something went wrong while fetching charts data"
+        }`}
+      />
+    );
   }
-
   if (!data?.length) {
     return <Alert message="No chart data available" />;
   }

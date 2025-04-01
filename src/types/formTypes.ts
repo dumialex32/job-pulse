@@ -1,19 +1,40 @@
 import { z } from "zod";
+import { Control, FieldValues, Path, UseFormReturn } from "react-hook-form";
 
-// JobType
-export type JobType = {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  clerkId: string;
-  position: string;
-  company: string;
-  location: string;
-  status: string;
-  mode: string;
+//////////////////////////
+/* CustomFormField types*/
+//////////////////////////
+export type FormFieldProps<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  name: Path<T>;
+  children: React.ReactElement;
 };
 
-// createJobForm types
+export type CustomFormFieldProps<T extends FieldValues> = {
+  control: Control<T>;
+  name: Path<T>;
+};
+
+////////////////////////////
+/* CustomFormSelect types */
+////////////////////////////
+export type SelectWidth = {
+  sm: "w-[140]";
+  md: "w-[180]";
+  lg: "w-[220]";
+  full: "w-full";
+};
+export type CustomFormSelectProps<T extends FieldValues> = {
+  options: Record<string, string>[];
+  name: Path<T>;
+  customLabel?: string;
+  control: Control<T>;
+  width?: keyof SelectWidth;
+};
+
+//////////////////////////////
+/* createOrEditJobFormTypes */
+//////////////////////////////
 export type CreateOrEditJobFormValues = z.infer<typeof createJobFormSchema> & {
   id?: string;
 };

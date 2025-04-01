@@ -5,11 +5,12 @@ import {
   CreateOrEditJobFormValues,
   JobMode,
   JobStatus,
-  JobType,
-} from "@/types/formTypes/createOrEditJobFormTypes";
+} from "@/types/formTypes";
+import { Job } from "@/types/jobTypes";
+
 import { useMemo } from "react";
 
-const EditJobButton = ({ job }: { job: JobType }) => {
+const EditJobButton = ({ job }: { job: Job }) => {
   const editJobValues: CreateOrEditJobFormValues = useMemo(
     () => ({
       id: job.id,

@@ -1,4 +1,4 @@
-import { ResultsProps } from "@/types/paginationTypes/paginationTypes";
+import { ResultsProps } from "@/types/paginationTypes";
 import pluralize from "pluralize";
 
 const Results = ({

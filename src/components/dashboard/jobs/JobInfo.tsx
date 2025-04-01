@@ -1,4 +1,5 @@
-import { JobStatus, JobType } from "@/types/formTypes/createOrEditJobFormTypes";
+import { JobStatus } from "@/types/formTypes";
+import { Job } from "@/types/jobTypes";
 import dayjs from "dayjs";
 import {
   BriefcaseBusiness,
@@ -19,7 +20,7 @@ const mapStatus: MapStatus = {
   declined: { icon: <CircleX />, style: "bg-red-400" },
 };
 
-const JobInfo = ({ job }: { job: JobType }) => {
+const JobInfo = ({ job }: { job: Job }) => {
   return (
     <div className="grid grid-cols-2 justify-between gap-y-4">
       <div className="flex items-center gap-2">

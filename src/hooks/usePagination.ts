@@ -2,7 +2,7 @@ import { usePathname, useRouter } from "next/navigation";
 import useQueryParams from "./useQueryParams";
 import { useCallback, useMemo } from "react";
 import { createPageButtons } from "@/utils/paginationUtils";
-import { usePaginationProps } from "@/types/paginationTypes/paginationTypes";
+import { usePaginationProps } from "@/types/paginationTypes";
 
 const usePagination = ({ currentPage, totalPages }: usePaginationProps) => {
   const { search, jobStatus } = useQueryParams();

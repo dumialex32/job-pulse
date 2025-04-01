@@ -4,14 +4,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { JobStatus } from "@/types/formTypes/createOrEditJobFormTypes";
+import { JobStatus } from "@/types/formTypes";
 
-const StatsCard = ({
-  stats,
-}: {
-  stats: { title: JobStatus; value: number };
-}) => {
-  console.log("stats:", stats);
+type Stats = { title: JobStatus; value: number };
+
+type StatsCardProps = {
+  stats: Stats;
+};
+
+const StatsCard = ({ stats }: StatsCardProps) => {
   return (
     <Card className="bg-muted">
       <CardHeader className="flex items-center justify-between">

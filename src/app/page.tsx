@@ -18,11 +18,13 @@ export default function Home() {
             job <span className="text-primary">tracking</span> app
           </h1>
 
-          <p className="leading-loose max-w-md mt-4">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum
-            veniam neque eum, enim tempore, itaque voluptate dolor quia aliquam
-            nisi placeat! Dignissimos odit, deleniti inventore ipsam commodi id!
-            Reiciendis, eum.
+          <p className="leading-loose max-w-xl mt-4">
+            Stay organized and in control of your job search with{" "}
+            <span className="text-2xl font-bold text-primary">Job Pulse</span>.
+            Easily track job applications, manage statuses, set reminders, and
+            never miss an opportunity. Whether you&apos;re actively applying or
+            keeping tabs on potential roles, job pulse helps you stay on top of
+            every step in the hiring process.
           </p>
 
           <Button asChild className="mt-4">

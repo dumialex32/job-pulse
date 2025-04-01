@@ -6,12 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { JobType } from "@/types/formTypes/createOrEditJobFormTypes";
+
 import JobInfo from "./JobInfo";
 import DeleteJobButton from "./DeleteJobButton";
 import EditJobButton from "./EditJobButton";
+import { Job } from "@/types/jobTypes";
 
-const JobCard = ({ job }: { job: JobType }) => {
+const JobCard = ({ job }: { job: Job }) => {
   return (
     <Card className="bg-muted">
       <CardHeader>

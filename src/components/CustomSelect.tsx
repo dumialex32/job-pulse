@@ -30,8 +30,6 @@ const CustomSelect = <T extends string | number>({
     defaultValue
   );
 
-  console.log(selectedValue);
-
   const handleChange = (val: string) => {
     const newValue = val as T;
 

@@ -10,7 +10,7 @@ import { FieldValues } from "react-hook-form";
 import {} from "../../ui/select";
 import { capitalize } from "@/utils/stringUtils";
 import { Input } from "../../ui/input";
-import { CustomFormFieldProps } from "@/types/formTypes/customFormFieldTypes";
+import { CustomFormFieldProps } from "@/types/formTypes";
 
 const CustomFormField = <T extends FieldValues>({
   name,

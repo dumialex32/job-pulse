@@ -7,10 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
-import {
-  CustomFormSelectProps,
-  SelectWidth,
-} from "@/types/formTypes/customFormSelectTypes";
+import { CustomFormSelectProps, SelectWidth } from "@/types/formTypes";
+
 
 const mapSelectWidth: SelectWidth = {
   sm: "w-[140]",

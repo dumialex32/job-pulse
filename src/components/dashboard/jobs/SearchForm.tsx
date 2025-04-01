@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getSelectOptions } from "@/utils/formUtils";
-import { JobStatus } from "@/types/formTypes/createOrEditJobFormTypes";
 import { usePathname, useRouter } from "next/navigation";
 import CustomSelect from "@/components/CustomSelect";
 import useQueryParams from "@/hooks/useQueryParams";
+import { JobStatus } from "@/types/formTypes";
 
 const SearchForm = () => {
   const router = useRouter();

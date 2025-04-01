@@ -15,7 +15,11 @@ const JobsList = () => {
 
   if (isLoading) return <JobLoadingCardList itemsPerPage={itemsPerPage} />;
   if (isError)
-    return <Alert message={error?.message || "Error fetching jobs"} />;
+    return (
+      <Alert
+        message={error?.message || "Something went wrong while fetching jobs."}
+      />
+    );
   if (!data?.jobs?.length) {
     return <Alert message="No jobs available!" />;
   }

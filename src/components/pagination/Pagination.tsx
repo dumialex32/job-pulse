@@ -1,4 +1,4 @@
-import { PaginationProps } from "@/types/paginationTypes/paginationTypes";
+import { PaginationProps } from "@/types/paginationTypes";
 import PaginationButtons from "./PaginationButtons";
 import CustomSelect from "../CustomSelect";
 

@@ -1,19 +1,26 @@
 "use server";
 
-import {
-  createJobFormSchema,
-  CreateOrEditJobFormValues,
-  JobType,
-} from "@/types/formTypes/createOrEditJobFormTypes";
 import prisma from "./db";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import {
-  GetJobsActionProps,
-  GetJobsActionResponse,
-} from "@/types/actionsTypes/jobActionsTypes";
+
 import { Prisma } from "@prisma/client";
 import dayjs from "dayjs";
+import {
+  CreateJobActionResponse,
+  DeleteJobActionResponse,
+  EditJobActionResponse,
+  GetChartsActionResponse,
+  GetJobActionResponse,
+  GetJobsActionProps,
+  GetJobsActionResponse,
+  GetStatsActionResponse,
+} from "@/types/actionTypes";
+import {
+  createJobFormSchema,
+  CreateOrEditJobFormValues,
+} from "@/types/formTypes";
+import { Job } from "@/types/jobTypes";
 
 const authAndRedirect = async () => {
   const { userId } = await auth();
@@ -31,7 +38,6 @@ export const getJobsAction = async ({
   search = "",
   jobStatus = "",
 }: GetJobsActionProps): Promise<GetJobsActionResponse> => {
-  console.log(limit);
   try {
     const userId = await authAndRedirect();
 
@@ -81,7 +87,9 @@ export const getJobsAction = async ({
   }
 };
 
-export const getJobAction = async (id: string): Promise<JobType | null> => {
+export const getJobAction = async (
+  id: string
+): Promise<GetJobActionResponse> => {
   try {
     const userId = await authAndRedirect();
 
@@ -101,13 +109,13 @@ export const getJobAction = async (id: string): Promise<JobType | null> => {
 
 export const createJobAction = async (
   values: CreateOrEditJobFormValues
-): Promise<JobType | null> => {
+): Promise<CreateJobActionResponse> => {
   try {
     createJobFormSchema.parse(values);
 
     const userId = await authAndRedirect();
 
-    const job: JobType = await prisma.job.create({
+    const job: Job = await prisma.job.create({
       data: {
         ...values,
         clerkId: userId,
@@ -124,7 +132,7 @@ export const createJobAction = async (
 export const editJobAction = async (
   values: CreateOrEditJobFormValues,
   id: string
-): Promise<JobType | null> => {
+): Promise<EditJobActionResponse> => {
   try {
     createJobFormSchema.parse(values);
 
@@ -142,14 +150,14 @@ export const editJobAction = async (
 
     return job;
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return null;
   }
 };
 
 export const deleteJobAction = async (
   jobId: string
-): Promise<JobType | null> => {
+): Promise<DeleteJobActionResponse> => {
   try {
     const userId = await authAndRedirect();
 
@@ -164,11 +172,7 @@ export const deleteJobAction = async (
   }
 };
 
-export const getStatsAction = async (): Promise<{
-  pending: number;
-  interview: number;
-  declined: number;
-}> => {
+export const getStatsAction = async (): Promise<GetStatsActionResponse> => {
   try {
     const userId = await authAndRedirect();
 
@@ -203,9 +207,7 @@ export const getStatsAction = async (): Promise<{
   }
 };
 
-export async function getChartsDataAction(): Promise<
-  { date: string; count: number }[]
-> {
+export async function getChartsDataAction(): Promise<GetChartsActionResponse> {
   const sixMonthsAgo = dayjs().subtract(6, "month").toDate();
   try {
     const userId = await authAndRedirect();
@@ -237,7 +239,7 @@ export async function getChartsDataAction(): Promise<
 
     return applicationsPerMonth;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     redirect("/jobs");
   }
 }

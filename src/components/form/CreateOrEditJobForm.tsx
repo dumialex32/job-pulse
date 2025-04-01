@@ -4,12 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "../ui/form";
 import { Button } from "../ui/button";
-import {
-  CreateOrEditJobFormValues,
-  createJobFormSchema,
-  JobMode,
-  JobStatus,
-} from "@/types/formTypes/createOrEditJobFormTypes";
+
 import CustomFormSelect from "./CustomFormComponents/CustomFormSelect";
 import CustomFormField from "./CustomFormComponents/CustomFormField";
 import { getSelectOptions } from "@/utils/formUtils";
@@ -21,6 +16,12 @@ import { useRouter } from "next/navigation";
 import ButtonLoader from "../ButtonLoader";
 import { DialogClose, DialogTitle } from "../ui/dialog";
 import { useRef } from "react";
+import {
+  createJobFormSchema,
+  CreateOrEditJobFormValues,
+  JobMode,
+  JobStatus,
+} from "@/types/formTypes";
 
 const createOrEditJobDefaultValues = (
   editJobValues?: CreateOrEditJobFormValues

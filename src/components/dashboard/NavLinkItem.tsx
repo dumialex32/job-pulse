@@ -8,9 +8,6 @@ import { usePathname } from "next/navigation";
 const NavLinkItem = ({ link }: { link: NavLink }) => {
   const pathname = usePathname();
 
-  console.log(pathname);
-  console.log(pathname === link.href);
-
   return (
     <Button asChild variant={pathname === link.href ? "default" : "link"}>
       <Link href={link.href} className="flex items-center gap-x-2">
